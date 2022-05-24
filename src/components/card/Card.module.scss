@@ -4,7 +4,10 @@
   width: 100%;
   aspect-ratio: 4/3;
   perspective: 1000px;
-  cursor: pointer;
+
+  &.Clickable {
+    cursor: pointer;
+  }
 }
 
 .Inner {

@@ -13,12 +13,20 @@ interface CardProps {
 }
 
 const Card: FC<CardProps> = ({ character, onClick, active, guessed }) => {
+  const classes = [styles.Card];
+
+  if (active) {
+    classes.push(styles.Active);
+  } else if (guessed) {
+    classes.push(styles.Guessed);
+  } else {
+    classes.push(styles.Clickable);
+  }
+
   return (
     <div
-      onClick={onClick}
-      className={`${styles.Card} ${active ? styles.Active : ""} ${
-        guessed ? styles.Guessed : ""
-      }`}
+      className={classes.join(" ")}
+      onClick={!active && !guessed ? onClick : undefined}
     >
       <div className={styles.Inner}>
         <div className={styles.Front}>
