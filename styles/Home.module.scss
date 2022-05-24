@@ -1,0 +1,24 @@
+@import "./variables.module.scss";
+
+.Container {
+  width: 100%;
+  max-width: 960px;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+.Title {
+  color: $text-color;
+  text-align: center;
+  font-weight: 700;
+  margin: 0 0 20px;
+}
+
+.Grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  justify-items: center;
+  align-items: stretch;
+  gap: 2rem;
+}
