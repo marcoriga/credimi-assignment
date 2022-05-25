@@ -12,7 +12,9 @@ export const resolvers = {
           `https://www.amiiboapi.com/api/amiibo/?gameseries=${args.series}`
         );
 
-        return characters.data.amiibo.slice(0, 6);
+        return characters.data.amiibo
+          .sort(() => Math.random() - 0.5)
+          .slice(0, 6);
       } catch (error) {
         throw error;
       }
