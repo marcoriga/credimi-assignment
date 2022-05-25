@@ -1,0 +1,60 @@
+@import "styles/variables.module.scss";
+@import "styles/partials/mq";
+
+.Modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.Backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  backdrop-filter: blur(3px);
+  background-color: rgba($text-color, 0.32);
+}
+
+.Content {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  padding: 2rem;
+  background-color: $white;
+  border: 1px solid $text-color;
+  transform: translate(-50%, -70%);
+  width: 90%;
+  max-width: 600px;
+  text-align: center;
+  transition-delay: 1s;
+  transition: all 0.3s ease-out;
+  opacity: 0;
+  z-index: 1000;
+
+  @include mq($from: lg) {
+    padding: 2rem 4rem;
+  }
+
+  .Modal.Visible & {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+.Actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+
+  @include mq($until: sm) {
+    &>button {
+      width: 100%;
+    }
+  }
+}

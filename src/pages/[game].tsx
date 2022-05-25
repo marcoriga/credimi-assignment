@@ -8,12 +8,13 @@ import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { CHARACTERS } from "src/graphql/queries/characters";
 import Card from "src/components/card";
 import Loader from "src/components/loader";
+import ModalWinner from "src/components/modal-winner";
 import React from "react";
 import styles from "styles/Game.module.scss";
 import { useQuery } from "@apollo/client";
 import { useState } from "react";
 
-let timeout: any;
+let timeout: ReturnType<typeof setTimeout>;
 
 interface GameProps {
   series: "Pokemon" | "Animal Crossing" | "Mario Sports Superstars";
@@ -27,20 +28,20 @@ const Game: NextPage<GameProps> = ({ series }) => {
     CharactersQuery_characters[] | []
   >([]);
 
-  const { loading } = useQuery<CharactersQuery, CharactersQueryVariables>(
-    CHARACTERS,
-    {
-      variables: { series },
-      fetchPolicy: "network-only",
-      onCompleted: (data: CharactersQuery) => {
-        setCharacters(
-          [...data.characters, ...data.characters].sort(
-            () => Math.random() - 0.5
-          )
-        );
-      },
-    }
-  );
+  const { loading, refetch } = useQuery<
+    CharactersQuery,
+    CharactersQueryVariables
+  >(CHARACTERS, {
+    variables: { series },
+    fetchPolicy: "network-only",
+    nextFetchPolicy: "network-only",
+    notifyOnNetworkStatusChange: true,
+    onCompleted: (data: CharactersQuery) => {
+      setCharacters(
+        [...data.characters, ...data.characters].sort(() => Math.random() - 0.5)
+      );
+    },
+  });
 
   const compareSelection = (index: number) => {
     return characters[index].name === characters[active[0]].name;
@@ -71,22 +72,36 @@ const Game: NextPage<GameProps> = ({ series }) => {
     }
   };
 
+  const restart = () => {
+    setActive([]);
+    setGuessed([]);
+    setCharacters([]);
+
+    refetch();
+  };
+
   if (loading) {
     return <Loader />;
   }
 
   return (
-    <div className={styles.Grid}>
-      {characters.map((character, index) => (
-        <Card
-          key={index}
-          character={character}
-          active={active.includes(index)}
-          guessed={guessed.includes(index)}
-          onClick={() => onCardClick(index)}
-        />
-      ))}
-    </div>
+    <>
+      <div className={styles.Grid}>
+        {characters.map((character, index) => (
+          <Card
+            key={index}
+            character={character}
+            active={active.includes(index)}
+            guessed={guessed.includes(index)}
+            onClick={() => onCardClick(index)}
+          />
+        ))}
+      </div>
+
+      {guessed.length === characters.length && (
+        <ModalWinner onPlayAgain={restart} />
+      )}
+    </>
   );
 };
 

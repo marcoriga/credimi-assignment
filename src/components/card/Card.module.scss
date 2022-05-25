@@ -41,7 +41,7 @@
 
 .Back {
   transform: rotateY(180deg);
-  background-color: #fff;
+  background-color: $white;
   transition: opacity 0.5s ease-in;
 
   .Card.Guessed & {

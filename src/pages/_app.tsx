@@ -14,12 +14,14 @@ function MyApp({ Component, pageProps }: AppProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="container">
-        <h1 className="title">Amiibo memory card game</h1>
+      <div className="main">
+        <div className="container">
+          <h1 className="title">Amiibo memory card game</h1>
 
-        <ApolloProvider client={client}>
-          <Component {...pageProps} />
-        </ApolloProvider>
+          <ApolloProvider client={client}>
+            <Component {...pageProps} />
+          </ApolloProvider>
+        </div>
       </div>
     </>
   );

@@ -1,13 +1,23 @@
 @import "./variables.module.scss";
 @import "./partials/mq";
 
+.Wrapper {
+  position: relative;
+}
+
 .Grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: repeat(6, 1fr);
   justify-items: center;
   align-items: stretch;
-  gap: 2rem;
+  gap: 1rem;
+
+  @include mq($from: md) {
+    gap: 2rem;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+  }
 
   @include mq($from: lg) {
     grid-template-columns: repeat(4, 1fr);
