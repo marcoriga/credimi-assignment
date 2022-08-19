@@ -9,16 +9,12 @@ Installare le dipendende tramite:
 
 ```bash
 npm install
-# or
-yarn install
 ```
 
 Lanciare il server di sviluppo:
 
 ```bash
 npm run dev
-# or
-yarn dev
 ```
 
 **Enjoy**
